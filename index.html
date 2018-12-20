@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Translate</title>
+
+    <meta name="description" content="Translate words, перевод слов">
+
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="Translate">
+	<meta name="apple-mobile-web-app-title" content="Translate">
+	<meta name="msapplication-starturl" content="/eng/">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="apple-touch-icon" sizes="57x57" href="icons/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="icons/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="icons/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="icons/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="icons/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="icons/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+	<link rel="manifest" href="/eng/manifest.json">
+	<meta name="msapplication-TileColor" content="#f9ecd4">
+	<meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
+	<meta name="theme-color" content="#f9ecd4">
+
+    <script>
+		if ('serviceWorker' in navigator) {
+		  window.addEventListener('load', function() {
+		    navigator.serviceWorker.register('/eng/sw.js').then(function(registration) {
+		      // Registration was successful
+		      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		    }, function(err) {
+		      // registration failed :(
+		      console.log('ServiceWorker registration failed: ', err);
+		    });
+		  });
+		}
+	</script>    
+  </head>
+  <body>
+  	<div id="container">
+  		<div>
+  			<input type="radio" id="type_eng_rus" name="translate" value="eng_to_rus">
+  			<label for="type_eng_rus">English</label>
+  			<input type="radio" id="type_rus_eng" name="translate" value="rus_to_eng" checked>
+  			<label for="type_rus_eng">Russian</label>
+  		</div>
+
+  		<div>
+	  		<input type="checkbox" id="type_noun" value="noun"><label for="type_noun">noun</label>
+	  		<input type="checkbox" id="type_adjective" value="adjective"><label for="type_adjective">adjective</label>
+	  		<input type="checkbox" id="type_verb" value="verb"><label for="type_verb">verb</label>
+	  		<input type="checkbox" id="type_it" value="it"><label for="type_it">it</label>
+	  	</div>
+
+	  	<div class="test">
+	  		<h2 id="question"></h2>
+	  		<input type="text" name="answer" id="ans">
+	  		<a href="#" id="next" class="btn">Next</a>
+	  		<a href="#" id="help" class="btn">Help</a>
+	  	</div>
+  	</div>
+
+  	<script src="/js/noun.js"></script>
+  	<script src="/js/adjective.js"></script>
+  	<script src="/js/verb.js"></script>
+  	<script src="/js/it.js"></script>
+  	<script>
+    	var next = document.getElementById('next');
+    	var help = document.getElementById('help');
+    	var answer = document.getElementById('ans');
+    	var question = document.getElementById('question');
+    	var eng_rus = document.getElementById('type_eng_rus');
+
+    	var ind = -1;
+    	var questions = [];
+
+    	window.onload = function(e) {
+    		build_questions();
+    		next_question();
+    	}
+
+		next.onclick = next_question;
+
+		help.onclick = function(e) {
+			answer.value = get_answer();
+		}
+
+		answer.oninput = function(e) {
+			if (answer.value == get_answer()) {
+				color_answer(false);
+				setTimeout(next_question, 1000);
+			} else {
+				color_answer();
+			};
+		}
+
+		document.getElementById('type_noun').onclick = build_questions;
+		document.getElementById('type_adjective').onclick = build_questions;
+		document.getElementById('type_verb').onclick = build_questions;
+		document.getElementById('type_it').onclick = build_questions;
+
+		function next_question() {
+		  ind += 1;
+		  if(ind >= questions.length) {
+		  	ind = 0;
+		  }
+		  answer.value = "";
+		  question.innerHTML = get_question();
+		  color_answer();
+		}
+
+		function get_question() {
+		  if (eng_rus.checked === true) {
+		    return questions[ind][0];
+		  } else {
+		  	return questions[ind][1];
+		  }
+		}
+
+		function get_answer() {
+		  if (eng_rus.checked === true) {
+		    return questions[ind][1];
+		  } else {
+		  	return questions[ind][0];
+		  }
+		}
+
+		function color_answer(wrong = true) {
+		  if(wrong === true) {
+		    answer.style = "color: #555; background-color: transparent;";
+		  } else {
+		  	answer.style = "color: #3d6827; background-color: #dbf9d4;";
+		  }
+		}
+
+		function build_questions() {
+		  questions = []
+		  if (document.getElementById('type_noun').checked === true) {
+		    questions = questions.concat(nouns);
+		  }
+		  if (document.getElementById('type_adjective').checked === true) {
+		    questions = questions.concat(adjectives);
+		  }
+		  if (document.getElementById('type_verb').checked === true) {
+		    questions = questions.concat(verbs);
+		  }
+		  if (document.getElementById('type_it').checked === true) {
+		    questions = questions.concat(ities);
+		  }
+		  if (questions.length == 0) {
+		  	questions = [['-', '-']]
+		  }
+		  next_question();
+		}
+    </script>
+  </body>
+</html>
