@@ -127,8 +127,10 @@
 		function next_question() {
 		  ind = Math.floor(Math.random() * (questions.length - 1));
 		  answer.value = "";
+		  answer.blur();
 		  question.innerHTML = get_question();
 		  color_answer();
+		  answer.focus();
 		}
 
 		function get_question() {
