@@ -49,24 +49,22 @@
   <body>
   	<div id="container">
   		<div class="test">
-	  		<h2 id="question"></h2>
+	  		<b id="question"></b>
 	  		<input type="text" name="answer" id="ans">
 	  		<a href="#" id="next" class="btn">Next</a>
 	  		<a href="#" id="help" class="btn">Help</a>
 	  	</div>
 
 	  	<div>
-  			<input type="radio" id="type_eng_rus" name="translate" value="eng_to_rus">
-  			<label for="type_eng_rus">English</label>
-  			<input type="radio" id="type_rus_eng" name="translate" value="rus_to_eng" checked>
-  			<label for="type_rus_eng">Russian</label>
+  			<label><input type="radio" id="type_eng_rus" name="translate" value="eng_to_rus">English</label>
+  			<label><input type="radio" id="type_rus_eng" name="translate" value="rus_to_eng" checked>Russian</label>
   		</div>
 
   		<div>
-	  		<input type="checkbox" id="type_noun" value="noun"><label for="type_noun">noun</label>
-	  		<input type="checkbox" id="type_adjective" value="adjective"><label for="type_adjective">adjective</label>
-	  		<input type="checkbox" id="type_verb" value="verb"><label for="type_verb">verb</label>
-	  		<input type="checkbox" id="type_it" value="it"><label for="type_it">it</label>
+	  		<label><input type="checkbox" id="type_noun" value="noun">noun</label>
+	  		<label><input type="checkbox" id="type_adjective" value="adjective">adjective</label>
+	  		<label><input type="checkbox" id="type_verb" value="verb">verb</label>
+	  		<label><input type="checkbox" id="type_it" value="it">it</label>
 	  	</div>
   	</div>
 
@@ -80,6 +78,8 @@
     	var answer = document.getElementById('ans');
     	var question = document.getElementById('question');
     	var eng_rus = document.getElementById('type_eng_rus');
+
+    	var touch_x = 0;
 
     	var ind = -1;
     	var questions = [];
@@ -102,6 +102,17 @@
 			} else {
 				color_answer();
 			};
+		}
+
+		question.ontouchstart = function(e) {
+			touch_x = e.touches[0].clientX;
+		}
+
+		question.ontouchend = function(e) {
+			if (e.touches[0].clientX < touch_x) {
+				next_question();
+			}
+			touch_x = 0;
 		}
 
 		document.getElementById('type_noun').onclick = build_questions;

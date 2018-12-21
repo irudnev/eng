@@ -1,8 +1,8 @@
 
 body {
-	background: #f9ecd4 url("images/geometric-patterns-2014783_640.jpg");
-	padding: 0;
-	margin: 0;
+	background: #f9ecd4 url("image/geometric-patterns-2014783_640.jpg");
+	/*padding: 0;
+	margin: 0;*/
 	font-family:'Roboto',sans-serif;
 	font-size: 1.5em;
 	color: #555;
@@ -24,22 +24,32 @@ body {
 	margin: 0.3em auto;
 }
 
-#question {
-	display: block;
+.test {
+	max-width: 99%;
+}
+
+#question, #ans {
 	border:0.1em solid #e5cbae;
 	border-radius:0.12em;
+	padding:0.35em 1.2em;
 	text-align: center;
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 0.3em;
+}
+
+#question {
+	display: block;
 }
 
 #ans {
-	border: 0.1em solid #e5cbae;
-	border-radius: 0.12em;
-	text-align: center;
 	color: #555;
-	background-color: transparent;
 	font-size: 1em;
-	padding:0.35em 1.2em;
 	outline: none;
+}
+
+#help {
+	float: right;
 }
 
 a.btn {
@@ -53,6 +63,7 @@ a.btn {
 	color: #555;
 	text-align:center;
 	transition: all 0.2s;
+	width: 40%;
 }
 
 a.btn:hover {
@@ -64,15 +75,19 @@ a.btn:hover {
 	a.btn {
 		display:block;
 		margin:0.4em auto;
+		padding: 0.1em 0;
+		width: 100%;
 	}
-}
 
-#box {
-	position: absolute;
-	background-color: #000;
-	width: 5em;
-	height: 3em;
-	top: 500px;
-	/*margin-top: 40%;
-	margin-left: 48%;*/
+	div label {
+		display: block;
+	}
+
+	#help {
+		float: none;
+	}
+
+	#question, #ans {
+		padding: 0.1em 0.3em;
+	}
 }
