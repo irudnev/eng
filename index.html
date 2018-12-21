@@ -109,9 +109,7 @@
 		}
 
 		question.ontouchend = function(e) {
-			alert(touch_x);
-			alert(e.touches[0].clientX);
-			if (e.touches[0].clientX < touch_x) {
+			if (e.changedTouches[0].clientX < touch_x) {
 				next_question();
 			}
 			touch_x = 0;
