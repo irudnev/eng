@@ -50,7 +50,7 @@
   	<div id="container">
   		<div class="test">
 	  		<b id="question"></b>
-	  		<input type="text" name="answer" id="ans" placeholder="перевод">
+	  		<input type="text" name="answer" id="ans" placeholder="введите перевод" autofocus>
 	  		<a href="#" id="next" class="btn">Следующее</a>
 	  		<a href="#" id="help" class="btn">Перевести</a>
 	  	</div>
@@ -95,7 +95,7 @@
 
 		help.onclick = function(e) {
 			answer.value = get_answer();
-			setTimeout(next_question, 1000);
+			// setTimeout(next_question, 1000);
 		}
 
 		answer.oninput = function(e) {
