@@ -99,7 +99,17 @@
 		}
 
 		answer.oninput = function(e) {
-			if (answer.value.toLowerCase() == get_answer().toLowerCase()) {
+			var answer_now = get_answer().toLowerCase();
+			var answers_now = answer_now.split(', ');
+			var right_answer = false;
+
+			for(var i = 0; i < answers_now.length; i++) {
+		    	if(answer.value.toLowerCase() === answers_now[i]) {
+		    		right_answer = true;
+		    	}
+		    }
+
+			if (right_answer === true) {
 				color_answer(false);
 				setTimeout(next_question, 1000);
 			} else {
@@ -124,8 +134,16 @@
 		document.getElementById('type_work').onclick = build_questions;
 		document.getElementById('type_top100').onclick = build_questions;
 
+		eng_rus.onchange = function(e) {
+			next_question();
+		}
+
+		document.getElementById('type_rus_eng').onchange = function(e) {
+			next_question();
+		}
+
 		function next_question() {
-		  ind = Math.floor(Math.random() * (questions.length - 1));
+		  ind = Math.floor(Math.random() * questions.length);
 		  answer.value = "";
 		  answer.blur();
 		  question.innerHTML = get_question();
@@ -151,7 +169,7 @@
 
 		function color_answer(wrong = true) {
 		  if(wrong === true) {
-		    answer.style = "color: #555; background-color: transparent;";
+		    answer.style = "color: #ffffff; background-color: transparent;";
 		  } else {
 		  	answer.style = "color: #3d6827; background-color: #dbf9d4;";
 		  }
@@ -175,7 +193,7 @@
 		    questions = questions.concat(top100);
 		  }
 		  if (questions.length == 0) {
-		  	questions = [['-', '-']]
+		  	questions = [['-', '-'], ["rr, tn", "tt, ss, rr, kk"]]
 		  }
 		  next_question();
 		}
