@@ -61,17 +61,19 @@
   		</div>
 
   		<div>
-	  		<label><input type="checkbox" id="type_noun" value="noun">noun</label>
+	  		<!-- <label><input type="checkbox" id="type_noun" value="noun">noun</label> -->
 	  		<label><input type="checkbox" id="type_adjective" value="adjective">adjective</label>
 	  		<label><input type="checkbox" id="type_verb" value="verb">verb</label>
-	  		<label><input type="checkbox" id="type_it" value="it">it</label>
+	  		<label><input type="checkbox" id="type_work" value="work">work</label>
+	  		<label><input type="checkbox" id="type_top100" value="top100">top100</label>
 	  	</div>
   	</div>
 
-  	<script src="/eng/js/noun.js"></script>
+  	<!-- <script src="/eng/js/noun.js"></script> -->
   	<script src="/eng/js/adjective.js"></script>
   	<script src="/eng/js/verb.js"></script>
-  	<script src="/eng/js/it.js"></script>
+  	<script src="/eng/js/work.js"></script>
+  	<script src="/eng/js/top100.js"></script>
   	<script>
     	var next = document.getElementById('next');
     	var help = document.getElementById('help');
@@ -97,7 +99,7 @@
 		}
 
 		answer.oninput = function(e) {
-			if (answer.value == get_answer()) {
+			if (answer.value.toLowerCase() == get_answer().toLowerCase()) {
 				color_answer(false);
 				setTimeout(next_question, 1000);
 			} else {
@@ -116,16 +118,14 @@
 			touch_x = 0;
 		}
 
-		document.getElementById('type_noun').onclick = build_questions;
+		// document.getElementById('type_noun').onclick = build_questions;
 		document.getElementById('type_adjective').onclick = build_questions;
 		document.getElementById('type_verb').onclick = build_questions;
-		document.getElementById('type_it').onclick = build_questions;
+		document.getElementById('type_work').onclick = build_questions;
+		document.getElementById('type_top100').onclick = build_questions;
 
 		function next_question() {
-		  ind += 1;
-		  if(ind >= questions.length) {
-		  	ind = 0;
-		  }
+		  ind = Math.floor(Math.random() * (questions.length - 1));
 		  answer.value = "";
 		  question.innerHTML = get_question();
 		  color_answer();
@@ -157,17 +157,20 @@
 
 		function build_questions() {
 		  questions = []
-		  if (document.getElementById('type_noun').checked === true) {
-		    questions = questions.concat(nouns);
-		  }
+		  // if (document.getElementById('type_noun').checked === true) {
+		  //   questions = questions.concat(nouns);
+		  // }
 		  if (document.getElementById('type_adjective').checked === true) {
 		    questions = questions.concat(adjectives);
 		  }
 		  if (document.getElementById('type_verb').checked === true) {
 		    questions = questions.concat(verbs);
 		  }
-		  if (document.getElementById('type_it').checked === true) {
-		    questions = questions.concat(ities);
+		  if (document.getElementById('type_work').checked === true) {
+		    questions = questions.concat(works);
+		  }
+		  if (document.getElementById('type_top100').checked === true) {
+		    questions = questions.concat(top100);
 		  }
 		  if (questions.length == 0) {
 		  	questions = [['-', '-']]
