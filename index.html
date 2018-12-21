@@ -93,6 +93,7 @@
 
 		help.onclick = function(e) {
 			answer.value = get_answer();
+			setTimeout(next_question, 1000);
 		}
 
 		answer.oninput = function(e) {
@@ -144,7 +145,6 @@
 		  } else {
 		  	return questions[ind][0];
 		  }
-		  setTimeout(next_question, 1000);
 		}
 
 		function color_answer(wrong = true) {
