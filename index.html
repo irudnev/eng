@@ -51,7 +51,7 @@
   		<div class="test">
 	  		<b id="question"></b>
 	  		<input type="text" name="answer" id="ans" placeholder="введите перевод" autofocus>
-	  		<a href="#" id="next" class="btn">Следующее</a>
+	  		<!-- <a href="#" id="next" class="btn">Следующее</a> -->
 	  		<a href="#" id="help" class="btn">Перевести</a>
 	  	</div>
 
@@ -73,7 +73,7 @@
   	<script src="/eng/js/adjective.js"></script>
   	<script src="/eng/js/verb.js"></script>
   	<script src="/eng/js/work.js"></script>
-  	<script src="/eng/js/top100.js"></script>
+  	<script src="js/top100.js"></script>
   	<script>
     	var next = document.getElementById('next');
     	var help = document.getElementById('help');
@@ -91,7 +91,7 @@
     		next_question();
     	}
 
-		next.onclick = next_question;
+		// next.onclick = next_question;
 
 		help.onclick = function(e) {
 			var answer_now = get_answer().toLowerCase();
@@ -106,6 +106,7 @@
 
 			if(right_answer === false) {
 				answer.value = get_answer();
+				help.text = "Дальше";
 			} else {
 				next_question(focus=false);
 			}
@@ -158,14 +159,15 @@
 
 		function next_question(focus = true) {
 		  ind = Math.floor(Math.random() * questions.length);
+		  help.text = "Перевести";
 		  answer.value = "";
 		  answer.blur();
 		  question.innerHTML = get_question();
 		  color_answer();
 		  if (focus === true) {
 		  	answer.focus();
-		  	focus = true;
 		  }
+		  focus = true;
 		}
 
 		function get_question() {
