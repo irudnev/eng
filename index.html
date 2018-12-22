@@ -107,7 +107,7 @@
 			if(right_answer === false) {
 				answer.value = get_answer();
 			} else {
-				next_question();
+				next_question(focus=false);
 			}
 			// setTimeout(next_question, 1000);
 		}
@@ -156,13 +156,15 @@
 			next_question();
 		}
 
-		function next_question() {
+		function next_question(focus = true) {
 		  ind = Math.floor(Math.random() * questions.length);
 		  answer.value = "";
 		  answer.blur();
 		  question.innerHTML = get_question();
 		  color_answer();
-		  answer.focus();
+		  if (focus === true) {
+		  	answer.focus();
+		  }
 		}
 
 		function get_question() {
