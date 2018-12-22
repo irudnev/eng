@@ -94,7 +94,21 @@
 		next.onclick = next_question;
 
 		help.onclick = function(e) {
-			answer.value = get_answer();
+			var answer_now = get_answer().toLowerCase();
+			var answers_now = answer_now.split(', ');
+			var right_answer = false;
+
+			for(var i = 0; i < answers_now.length; i++) {
+		    	if(answer.value.toLowerCase() === answers_now[i]) {
+		    		right_answer = true;
+		    	}
+		    }
+
+			if(right_answer === false) {
+				answer.value = get_answer();
+			} else {
+				next_question();
+			}
 			// setTimeout(next_question, 1000);
 		}
 
