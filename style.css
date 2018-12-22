@@ -41,24 +41,27 @@ body {
 	text-align: center;
 	width: 100%;
 	box-sizing: border-box;
-	margin-top: 0.3em;
 }
 
 #question {
 	display: block;
+	margin-top: 1em;
 }
 
 #ans {
 	color: #ffffff;
 	font-size: 1em;
 	outline: none;
+	margin-top: 0.3em;
 }
 
 input[id="ans"]::-webkit-input-placeholder {
-	color: #666;
+	color: #ffffff;
+	opacity: 0.4;
 } 
 input[id="ans"]::-moz-placeholder {
-	color: #666;
+	color: #ffffff;
+	opacity: 0.4;
 }
 
 #help {
