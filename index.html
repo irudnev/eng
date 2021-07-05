@@ -51,6 +51,7 @@
   		<div class="test">
 	  		<b id="question"></b>
 	  		<input type="text" name="answer" id="ans" placeholder="введите перевод" autofocus>
+	  		<p id="meaning"></p>
 	  		<!-- <a href="#" id="next" class="btn">Следующее</a> -->
 	  		<a href="#" id="help" class="btn">Перевести</a>
 	  	</div>
@@ -65,20 +66,23 @@
 	  		<label><input type="checkbox" id="type_adjective" value="adjective">Прилагательные</label>
 	  		<label><input type="checkbox" id="type_verb" value="verb">Глаголы</label>
 	  		<label><input type="checkbox" id="type_work" value="work">Работа</label>
+	  		<label><input type="checkbox" id="type_buh" value="work">Бухгалтерия</label>
 	  		<label><input type="checkbox" id="type_top100" value="top100" checked>Топ 100</label>
 	  	</div>
   	</div>
 
   	<!-- <script src="/eng/js/noun.js"></script> -->
-  	<script src="/eng/js/adjective.js"></script>
-  	<script src="/eng/js/verb.js"></script>
-  	<script src="/eng/js/work.js"></script>
+  	<script src="js/adjective.js"></script>
+  	<script src="js/verb.js"></script>
+  	<script src="js/work.js"></script>
   	<script src="js/top100.js"></script>
+  	<script src="js/buh.js"></script>
   	<script>
     	var next = document.getElementById('next');
     	var help = document.getElementById('help');
     	var answer = document.getElementById('ans');
     	var question = document.getElementById('question');
+    	var meaning = document.getElementById('meaning');
     	var eng_rus = document.getElementById('type_eng_rus');
 
     	var touch_x = 0;
@@ -147,6 +151,7 @@
 		document.getElementById('type_adjective').onclick = build_questions;
 		document.getElementById('type_verb').onclick = build_questions;
 		document.getElementById('type_work').onclick = build_questions;
+		document.getElementById('type_buh').onclick = build_questions;
 		document.getElementById('type_top100').onclick = build_questions;
 
 		eng_rus.onchange = function(e) {
@@ -163,6 +168,13 @@
 		  answer.value = "";
 		  answer.blur();
 		  question.innerHTML = get_question();
+		  if (questions[ind].length == 3) {
+		  	meaning.innerHTML = questions[ind][2];
+		  	meaning.style.display = "block";
+		  } else {
+		  	meaning.innerHTML = "";
+		    meaning.style.display = "none";
+		  }
 		  color_answer();
 		  if (focus === true) {
 		  	answer.focus();
@@ -210,6 +222,9 @@
 		  }
 		  if (document.getElementById('type_top100').checked === true) {
 		    questions = questions.concat(top100);
+		  }
+		  if (document.getElementById('type_buh').checked === true) {
+		    questions = questions.concat(buh);
 		  }
 		  if (questions.length == 0) {
 		  	questions = [['-', '-'],]
